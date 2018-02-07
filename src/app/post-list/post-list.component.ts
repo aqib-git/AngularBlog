@@ -13,6 +13,8 @@ export class PostListComponent implements OnInit {
 
   public posts: Post[] = [];
   public users: User[] = [];
+  public searchedPosts: Post[] = [];
+  public loading: boolean = true;
   public q: string = '';
 
   constructor(
@@ -32,6 +34,7 @@ export class PostListComponent implements OnInit {
         for (let post of posts) {
           this.posts.push(Object.assign(new Post(), post));
         }
+        this.loading = false;
     });
   }
 
@@ -46,10 +49,20 @@ export class PostListComponent implements OnInit {
   search() {
     for (let post of this.posts) {
       if(post.title.search(this.q) === -1) {
-        post['show'] = false;
+        post.show = false;
       } else {
-        post['show'] = true;
+        post.show = true;
       }
     }
+  }
+
+  searchedPostsCount () : number{
+    let counter = 0;
+    for (let post of this.posts) {
+      if(post.show === true) {
+        counter++;
+      }  
+    }
+    return counter;
   }
 }

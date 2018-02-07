@@ -7,11 +7,17 @@
       <a routerLink="/posts/{{ post.id }}">
         <h2 class="title">#{{ i+1 }} {{ post.title }}</h2>
       </a>
-      <p class="description">{{ post.excerpt() }} <a routerLink="/posts/{{ post.id }}">READ MORE</a></p>
+      <p class="description">{{ post.excerpt() }} <a class="btn" routerLink="/posts/{{ post.id }}">READ MORE</a></p>
       <br>
       <div class="author">
         <span>Wrote by <b>{{ user(post.id).name }}</b></span>
       </div>
     </div>
   </article>
+  <div *ngIf="!loading && !searchedPostsCount()">
+    No posts found for search: <b>{{ this.q }}</b>
+  </div>
+  <div class="align-center" *ngIf="loading">
+      Loading Articles...
+    </div>
 </section>

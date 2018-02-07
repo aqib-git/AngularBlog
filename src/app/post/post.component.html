@@ -1,4 +1,4 @@
-<article *ngIf="post" class="post">
+<article *ngIf="user" class="post">
   <h1>{{ post.title }}</h1>
   <p>{{ post.body }}</p>
   <br>
@@ -9,5 +9,5 @@
 <br>
 <br>
 <div class="navigation">
-  <a routerLink="/posts">Back to Posts</a>
+  <a class="btn" routerLink="/posts">Back to Posts</a>
 </div>

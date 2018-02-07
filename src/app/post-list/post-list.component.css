@@ -13,5 +13,12 @@
 
 .post .post-content .description a { 
     color: white;
+    background-color: aqua;
     font-weight: bold;
+    padding: 10px;
+    box-shadow: 0 0 10px;
+    clear: both;
+    display: block;
+    max-width: 120px;
+    margin-top: 10px;
 }
