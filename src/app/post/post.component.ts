@@ -16,6 +16,7 @@ export class PostComponent implements OnInit {
 
   post: Post;
   user: User;
+  loading: boolean = true;
 
   constructor(
     private postService: PostService,
@@ -32,7 +33,10 @@ export class PostComponent implements OnInit {
       this.post = post;
       this.userService
         .getUser(parseInt(post.userId))
-        .subscribe(user => this.user = user);
+        .subscribe(user => {
+          this.user = user;
+          this.loading = false;
+        });
     });
   }
 }

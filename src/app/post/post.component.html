@@ -1,4 +1,4 @@
-<article *ngIf="user" class="post">
+<article *ngIf="!loading && user" class="post">
   <h1>{{ post.title }}</h1>
   <p>{{ post.body }}</p>
   <br>
@@ -6,6 +6,9 @@
     <span>wrote by <b>{{ user.name }}</b></span>
   </div>
 </article>
+<p *ngIf="loading">
+Loading Article...
+</p>
 <br>
 <br>
 <div class="navigation">

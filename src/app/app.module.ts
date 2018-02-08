@@ -42,7 +42,7 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     ),
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'app' }),
     HttpClientModule,
     FormsModule
   ],
