@@ -3,6 +3,7 @@ import { PostService } from '../post.service';
 import { UserService } from '../user.service';
 import { Post } from '../post';
 import { User } from '../user';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-post-list',
@@ -16,11 +17,16 @@ export class PostListComponent implements OnInit {
   public searchedPosts: Post[] = [];
   public loading: boolean = true;
   public q: string = '';
+  public postForm: FormGroup;
+  public postFormSubmitted: boolean = false;
 
   constructor(
     private postService: PostService, 
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private fb: FormBuilder
+  ) { 
+    this.createPostForm();
+  }
 
   ngOnInit() {  
     this.userService
@@ -64,5 +70,30 @@ export class PostListComponent implements OnInit {
       }  
     }
     return counter;
+  }
+
+  createPostForm () {
+    this.postForm = this.fb.group({
+      postItems: this.fb.array([])
+    });
+  }
+
+  addPostItem () {
+    this.postItems.push(this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required]
+    }));
+  }
+
+  removePostItem(index) {
+    this.postItems.removeAt(index);
+  }
+
+  get postItems () { return this.postForm.get('postItems') as FormArray; }
+
+  submitPosts () {
+    this.postFormSubmitted = true;
+    console.log(this.postForm.status);
+    console.log(this.postForm.value);
   }
 }

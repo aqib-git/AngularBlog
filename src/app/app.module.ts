@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 import { AppComponent } from './app.component';
 import { PostListComponent } from './post-list/post-list.component';
@@ -44,7 +45,8 @@ const appRoutes: Routes = [
     ),
     BrowserModule.withServerTransition({ appId: 'app' }),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [PostService, UserService],
   bootstrap: [AppComponent]

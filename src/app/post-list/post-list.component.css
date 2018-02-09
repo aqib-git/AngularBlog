@@ -2,23 +2,10 @@
     padding: 10px;
     background-color: lightcyan;
     margin-bottom: 20px;
-    box-shadow: 0 0 10px lightgrey;
 }
 
 .post .post-content a { 
     color: black; 
     font-weight: 400; 
     text-decoration: none;
-}
-
-.post .post-content .description a { 
-    color: white;
-    background-color: aqua;
-    font-weight: bold;
-    padding: 10px;
-    box-shadow: 0 0 10px;
-    clear: both;
-    display: block;
-    max-width: 120px;
-    margin-top: 10px;
 }
