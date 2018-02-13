@@ -29,10 +29,19 @@ export class PostListComponent implements OnInit {
   }
 
   ngOnInit() {  
+    this.fetchUsers();
+  }
+
+  fetchUsers () {
     this.userService
       .getUsers()
-      .subscribe(users => this.users = users);
+      .subscribe(users => {
+        this.users = users;
+        this.fetchPosts();
+      });
+  }
 
+  fetchPosts () {
     this.postService
       .getPosts()
       .subscribe((posts) => { 
@@ -44,7 +53,7 @@ export class PostListComponent implements OnInit {
     });
   }
 
-  user(id: number) {
+  user(id: any) {
     for (let user of this.users) {
       if (user.id === id) 
         return user;
@@ -52,24 +61,24 @@ export class PostListComponent implements OnInit {
     return {};
   }
 
-  search() {
-    for (let post of this.posts) {
-      if(post.title.search(this.q) === -1) {
-        post.show = false;
-      } else {
-        post.show = true;
-      }
-    }
-  }
-
   searchedPostsCount () : number{
+    if(this.isSearchEmpty) {
+      return 1;
+    }
     let counter = 0;
     for (let post of this.posts) {
-      if(post.show === true) {
+      if(post.show && post.title.search(this.q) > -1) {
         counter++;
-      }  
+      }
     }
     return counter;
+  }
+
+  get isSearchEmpty (): boolean {
+    if(!this.q || this.q.trim() === '') {
+      return true;
+    }
+    return false;
   }
 
   createPostForm () {
@@ -93,7 +102,13 @@ export class PostListComponent implements OnInit {
 
   submitPosts () {
     this.postFormSubmitted = true;
-    console.log(this.postForm.status);
-    console.log(this.postForm.value);
+    this.postService.postAll(this.postForm.value.postItems).subscribe(data => this.clearFormArray(this.postItems));
   }
+
+  clearFormArray = (formArray: FormArray) => {
+    while (formArray.length !== 0) {
+      formArray.removeAt(0)
+    }
+  }
+
 }

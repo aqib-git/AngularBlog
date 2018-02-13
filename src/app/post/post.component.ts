@@ -32,7 +32,7 @@ export class PostComponent implements OnInit {
     ).subscribe(post => {
       this.post = post;
       this.userService
-        .getUser(parseInt(post.userId))
+        .getUser(post.userId)
         .subscribe(user => {
           this.user = user;
           this.loading = false;

@@ -10,7 +10,7 @@ export class PostService{
   private origin: string;
 
   constructor(private httpClient: HttpClient) {
-    this.origin = 'https://jsonplaceholder.typicode.com';
+    this.origin = 'http://localhost:22199/api';
   }
 
   public getPosts (): Observable<Post[]> {
@@ -19,5 +19,9 @@ export class PostService{
 
   public getPost(id: number): Observable<Post> {
     return this.httpClient.get<Post>(`${this.origin}/posts/${id}`);
+  }
+
+  public postAll(posts: Post[]): Observable<Object> {
+    return this.httpClient.post(`${this.origin}/posts/all`, posts);
   }
 }

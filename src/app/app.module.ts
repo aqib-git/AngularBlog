@@ -4,14 +4,16 @@ import { HttpClientModule } from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { PostListComponent } from './post-list/post-list.component';
+import { PostComponent } from './post/post.component';
 
 
 import { PostService } from './post.service';
 import { UserService } from './user.service';
-import { PostComponent } from './post/post.component';
+import { AuthInterceptorService } from './auth-interceptor.service'
 
 const appRoutes: Routes = [
   { 
@@ -48,7 +50,11 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [PostService, UserService],
+  providers: [
+    PostService, 
+    UserService, 
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

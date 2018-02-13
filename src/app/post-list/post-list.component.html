@@ -1,3 +1,4 @@
+<!-- Post Create Form -->
 <div class="post-create-form">
   <div style="float: right; margin-bottom: 30px;" *ngIf="postItems.controls.length === 0">
     <button class="btn" (click)="addPostItem()"> Create New Post </button>
@@ -37,19 +38,23 @@
     </form>
   </div>
 </div>
+
+<!-- Search Input -->
 <div class="search">
-  <input [(ngModel)]="q" placeholder="Search an Article..." (keyup)="search()" autofocus/>
+  <input [(ngModel)]="q" placeholder="Search an Article..." autofocus/>
 </div>
+
+<!-- Post List -->
 <section class="post-list">
   <article class="post" *ngFor='let post of posts; let i = index'>
-    <div class="post-content" *ngIf="post.show === undefined || post.show === true">
+    <div class="post-content" *ngIf="post.show && (isSearchEmpty || !isSearchEmpty && post.title.search(q) > -1)">
       <a routerLink="/posts/{{ post.id }}">
         <h2 class="title">#{{ i+1 }} {{ post.title }}</h2>
       </a>
       <p class="description">{{ post.excerpt() }} <br /><a class="btn" routerLink="/posts/{{ post.id }}">READ MORE</a></p>
       <br>
       <div class="author">
-        <span>Wrote by <b>{{ user(post.id).name }}</b></span>
+        <span>Wrote by <b>{{ user(post.userId).userName }}</b></span>
       </div>
     </div>
   </article>
