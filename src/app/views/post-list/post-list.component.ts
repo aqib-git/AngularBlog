@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from '../post.service';
-import { UserService } from '../user.service';
-import { Post } from '../post';
-import { User } from '../user';
+import { PostService } from '../../post.service';
+import { UserService } from '../../user.service';
+import { Post } from '../../post';
+import { User } from '../../user';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({

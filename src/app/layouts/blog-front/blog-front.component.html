@@ -1,0 +1,73 @@
+<div>
+  <div class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+      <div class="container">
+        <div class="content">
+          <div class="logo">
+            <a class="navbar-brand" href="#">SharpBlog</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div class="search">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              </form>
+            </div>
+          </div>
+          <div class="account d-flex justify-content-end">
+            <div *ngIf="guest; else elseBlock">
+              <a href="" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">SignUp</a>
+              <a href="" class="btn btn-light" data-toggle="modal" data-target="#loginModal">SignIn</a>
+            </div>
+            <ng-template #elseBlock>
+              <a href="" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+                <span class="fa fa-plus"></span>
+                Post
+              </a>
+              <a class="btn btn-light" (click)="logout()">Logout</a>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="app-body">
+    <a routerLink="/posts">test</a>
+  </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel">Create SharpBlog Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-signup-form></app-signup-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SignIn Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">SignIn</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-signin-form></app-signin-form>
+      </div>
+    </div>
+  </div>
+</div>

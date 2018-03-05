@@ -1,0 +1,34 @@
+<form id="signin-form" (ngSubmit)="signin()" [formGroup]="signinForm" novalidate>
+  <div class="form-group">
+    <label for="signin-username">User Name</label>
+    <input type="text" class="form-control" id="signin-username" minlength="4" formControlName="userName" placeholder="User Name">
+    <div *ngIf="userName.invalid && (userName.dirty || userName.touched || showValidationErrors)"
+      class="alert alert-danger field-error">
+      <div *ngIf="userName.errors.required">
+        User Name is required.
+      </div>
+      <div *ngIf="userName.errors.minlength">
+        User Name length should be minimum of 4 characters.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="signin-password">Password</label>
+    <input type="password" class="form-control" id="signin-password" formControlName="password" placeholder="Password">
+    <div *ngIf="password.invalid && (password.dirty || password.touched || showValidationErrors)"
+      class="alert alert-danger field-error">
+      <div *ngIf="password.errors.required">
+        Password is required.
+      </div>
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary" [disabled]="registering">
+      <span *ngIf="registering" class="fa fa-spin fa-spinner"></span>
+      <span>SignIn</span>
+    </button>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="signinError">
+    Username or Password is Incorrect!
+  </div>
+</form>
