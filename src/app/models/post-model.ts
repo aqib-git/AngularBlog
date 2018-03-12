@@ -4,6 +4,7 @@ export class Post {
     public title: string
     public description: string
     public show: boolean = true;
+    public mediaId: string;
 
     constructor() {}
 

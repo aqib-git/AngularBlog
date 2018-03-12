@@ -7,29 +7,42 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { PostListComponent } from './views/post-list/post-list.component';
-import { PostComponent } from './post/post.component';
+
+/* Pages Components */
+import { PostListComponent } from './pages/post-list/post-list.component';
+import { CreatePostComponent } from './pages/create-post/create-post.component'
+/* Layout Components */
 import { BlogFrontComponent } from './layouts/blog-front/blog-front.component'
+/* Shared Components */
 import { SignupFormComponent } from './components/signup-form/signup-form.component'
 import { SigninFormComponent } from './components/signin-form/signin-form.component'
-
-import { PostService } from './post.service';
-import { UserService } from './user.service';
+import { PostFormComponent } from './components/post-form/post-form.component'
+/* Services */
+import { PostService } from './services/post.service';
+import { MediaService } from './services/media.service';
+import { UserService } from './services/user.service';
 import { AccountService } from './services/account.service'
 import { AuthInterceptorService } from './auth-interceptor.service'
+/* Gaurds */
+import { AuthGuard } from './services/auth-gaurd.service';
 
 const appRoutes: Routes = [
   {
     path: '',
-    component: BlogFrontComponent
-  },
-  {
-    path: 'posts/:id',
-    component: PostComponent
-  },
-  {
-    path: 'posts',
-    component: PostListComponent
+    component: BlogFrontComponent,
+    data: {requireAuth: false},
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: '',
+        data: {requireAuth: false},
+        canActivateChild: [AuthGuard],
+        children: [
+          { path: 'posts', component: PostListComponent, data: {requireAuth: true} },
+          { path: 'posts/create', component: CreatePostComponent, data: {requireAuth: true} }
+        ]
+      }
+    ]
   },
   {
     path: '**',
@@ -41,10 +54,11 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PostListComponent,
-    PostComponent,
     BlogFrontComponent,
     SignupFormComponent,
-    SigninFormComponent
+    SigninFormComponent,
+    PostFormComponent,
+    CreatePostComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -60,6 +74,8 @@ const appRoutes: Routes = [
     PostService,
     UserService,
     AccountService,
+    MediaService,
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]

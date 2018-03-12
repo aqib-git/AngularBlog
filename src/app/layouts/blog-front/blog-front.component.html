@@ -22,7 +22,7 @@
               <a href="" class="btn btn-light" data-toggle="modal" data-target="#loginModal">SignIn</a>
             </div>
             <ng-template #elseBlock>
-              <a href="" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+              <a routerLink="/posts/create" class="btn btn-primary">
                 <span class="fa fa-plus"></span>
                 Post
               </a>
@@ -34,7 +34,7 @@
     </nav>
   </div>
   <div class="app-body">
-    <a routerLink="/posts">test</a>
+    <router-outlet></router-outlet>
   </div>
 </div>
 

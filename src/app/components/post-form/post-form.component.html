@@ -1,0 +1,63 @@
+<form id="post-form" (ngSubmit)="savePost()" [formGroup]="postForm" novalidate>
+  <div class="form-group">
+    <label for="post-title">Title</label>
+    <input type="text" name="title" class="form-control" id="post-title" formControlName="title" placeholder="User Name">
+    <div *ngIf="title.invalid && (title.dirty || title.touched || showValidationErrors)"
+      class="alert alert-danger field-error">
+      <div *ngIf="title.errors.required">
+        Title is required.
+      </div>
+      <div *ngIf="title.errors.pattern">
+        Title should have only alphanumeric and whitespace.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="post-description">Description</label>
+    <textarea
+      rows="5"
+      name="description"
+      class="form-control"
+      id="post-description"
+      formControlName="description"
+      placeholder="Enter Post Description"></textarea>
+    <div *ngIf="description.invalid && (description.dirty || description.touched || showValidationErrors)"
+      class="alert alert-danger field-error">
+      <div *ngIf="description.errors.required">
+        Description is required.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group" *ngIf="!mediaId.value; else uploadedFile">
+      <div class="custom-file">
+        <input
+          type="file"
+          name="file"
+          (change)="mediaChange($event)"
+          class="custom-file-input"
+          id="post-media"
+          accept="image/x-png,image/gif,image/jpeg,video/mp4,video/ogg,video/webm">
+        <label class="custom-file-label" for="post-media">Choose Image/Video</label>
+      </div>
+    </div>
+    <ng-template class="media" #uploadedFile>
+      <div class="post-form-thumbnail-wrap">
+        <img src="{{mediaUrl}}" />
+        <span class="fa fa-times" (click)="mediaId.setValue(''); mediaUrl = ''"></span>
+      </div>
+    </ng-template>
+    <div class="alert alert-danger field-error" *ngIf="!validExtension && showValidationErrors">
+      Following {{ mediaExtensions.join(', ')}} are supported.
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary" [disabled]="saving">
+      <span *ngIf="saving" class="fa fa-spin fa-spinner"></span>
+      <span>Create</span>
+    </button>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="postError">
+    Unable to Create Post
+  </div>
+</form>

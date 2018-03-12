@@ -32,6 +32,27 @@ input, textarea, select {
     margin-right: 10px;
 }
 
+/* post form */
+.post-form-thumbnail-wrap {
+  display: block;
+  width: 250px;
+  height: 250px;
+  margin: auto;
+  position: relative;
+}
+
+.post-form-thumbnail-wrap .fa {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: red;
+  font-size: 30px;
+}
+
+#post-form-thumbnail-wrap img {
+  display: block;
+}
+
 /* Helpers */
 .field-error {
   margin: 10px 0px;

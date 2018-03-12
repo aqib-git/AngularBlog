@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from '../../post.service';
-import { UserService } from '../../user.service';
-import { Post } from '../../post';
-import { User } from '../../user';
+import { PostService } from '../../services/post.service';
+import { UserService } from '../../services/user.service';
+import { Post } from '../../models/post-model';
+import { User } from '../../models/user-model';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
@@ -21,14 +21,14 @@ export class PostListComponent implements OnInit {
   public postFormSubmitted: boolean = false;
 
   constructor(
-    private postService: PostService, 
+    private postService: PostService,
     private userService: UserService,
     private fb: FormBuilder
-  ) { 
+  ) {
     this.createPostForm();
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.fetchUsers();
   }
 
@@ -44,7 +44,7 @@ export class PostListComponent implements OnInit {
   fetchPosts () {
     this.postService
       .getPosts()
-      .subscribe((posts) => { 
+      .subscribe((posts) => {
         this.posts = [];
         for (let post of posts) {
           this.posts.push(Object.assign(new Post(), post));
@@ -55,7 +55,7 @@ export class PostListComponent implements OnInit {
 
   user(id: any) {
     for (let user of this.users) {
-      if (user.id === id) 
+      if (user.id === id)
         return user;
     }
     return {};
@@ -110,5 +110,4 @@ export class PostListComponent implements OnInit {
       formArray.removeAt(0)
     }
   }
-
 }
