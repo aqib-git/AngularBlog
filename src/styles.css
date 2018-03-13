@@ -51,6 +51,7 @@ input, textarea, select {
 
 #post-form-thumbnail-wrap img {
   display: block;
+  max-width: 100%;
 }
 
 /* Helpers */

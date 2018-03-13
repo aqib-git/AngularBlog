@@ -1,0 +1,14 @@
+<!-- Post List -->
+<section class="post-list mt-5 mb-5" *ngIf="post">
+  <div class="container">
+    <article class="post">
+      <div class="card">
+        <img class="card-img-top" src="{{ apiOrigin + post.media.uri }}" alt="Card image cap" *ngIf="post.media">
+        <div class="card-body">
+          <h2 class="card-title">{{ post.title }}</h2>
+          <p class="card-text">{{ post.description }}</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

@@ -25,6 +25,7 @@ import { AccountService } from './services/account.service'
 import { AuthInterceptorService } from './auth-interceptor.service'
 /* Gaurds */
 import { AuthGuard } from './services/auth-gaurd.service';
+import { PostSingleComponent } from './pages/post-single/post-single.component';
 
 const appRoutes: Routes = [
   {
@@ -38,8 +39,10 @@ const appRoutes: Routes = [
         data: {requireAuth: false},
         canActivateChild: [AuthGuard],
         children: [
+          { path: '', component: PostListComponent, data: {requireAuth: false} },
           { path: 'posts', component: PostListComponent, data: {requireAuth: false} },
-          { path: 'posts/create', component: CreatePostComponent, data: {requireAuth: true} }
+          { path: 'posts/create', component: CreatePostComponent, data: {requireAuth: true} },
+          { path: 'posts/:id', component: PostSingleComponent, data: {requireAuth: false} }
         ]
       }
     ]
@@ -58,7 +61,8 @@ const appRoutes: Routes = [
     SignupFormComponent,
     SigninFormComponent,
     PostFormComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    PostSingleComponent
   ],
   imports: [
     RouterModule.forRoot(

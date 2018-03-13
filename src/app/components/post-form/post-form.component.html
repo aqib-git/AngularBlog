@@ -1,7 +1,7 @@
 <form id="post-form" (ngSubmit)="savePost()" [formGroup]="postForm" novalidate>
   <div class="form-group">
     <label for="post-title">Title</label>
-    <input type="text" name="title" class="form-control" id="post-title" formControlName="title" placeholder="User Name">
+    <input type="text" name="title" class="form-control" id="post-title" formControlName="title" placeholder="Post Title">
     <div *ngIf="title.invalid && (title.dirty || title.touched || showValidationErrors)"
       class="alert alert-danger field-error">
       <div *ngIf="title.errors.required">

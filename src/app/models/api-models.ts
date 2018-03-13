@@ -5,6 +5,12 @@ export class ApiResponseList<T>
     public error: ApiResponseError;
 }
 
+export class ApiResponse<T>
+{
+    public data: T;
+    public error: ApiResponseError;
+}
+
 export class ApiResponsePagination
 {
     public totalPages: number;
