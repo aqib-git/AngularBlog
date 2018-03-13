@@ -1,8 +1,9 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Post } from '../models/post-model';
+import { Post, PostViewModel } from '../models/post-model';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { ApiResponseList } from '../models/api-models';
 
 @Injectable()
 export class PostService{
@@ -13,8 +14,8 @@ export class PostService{
     this.origin = 'http://localhost:22199/api';
   }
 
-  public getPosts (): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(`${this.origin}/posts`);
+  public getPosts (page = 1): Observable<ApiResponseList<PostViewModel>> {
+    return this.httpClient.get<ApiResponseList<PostViewModel>>(`${this.origin}/posts?page=${page}`);
   }
 
   public getPost(id: number): Observable<Post> {

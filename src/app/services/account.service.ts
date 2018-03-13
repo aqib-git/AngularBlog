@@ -57,13 +57,13 @@ export class AccountService {
   }
 
   user (): User {
-    if(!this.isTokenExpired()) {
+    if(this.isTokenExpired()) {
       return null;
     }
 
     let token: any = localStorage.getItem('token');
     token = JSON.parse(token);
 
-    return token.user;
+    return JSON.parse(token.user);
   }
 }

@@ -1,4 +1,4 @@
-export class MediaModel {
+export class MediaBindingModel {
   id: string;
   uri: string;
   name: string;

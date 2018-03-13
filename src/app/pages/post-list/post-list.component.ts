@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import { UserService } from '../../services/user.service';
-import { Post } from '../../models/post-model';
+import { PostViewModel } from '../../models/post-model';
 import { User } from '../../models/user-model';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { ApiResponseList } from '../../models/api-models';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-post-list',
@@ -12,102 +14,39 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 })
 export class PostListComponent implements OnInit {
 
-  public posts: Post[] = [];
-  public users: User[] = [];
-  public searchedPosts: Post[] = [];
+  public posts: PostViewModel[] = [];
   public loading: boolean = true;
-  public q: string = '';
-  public postForm: FormGroup;
-  public postFormSubmitted: boolean = false;
+  public apiOrigin: string;
+  public currentPage: number = 1;
+  public isLastPage: boolean;
 
   constructor(
-    private postService: PostService,
-    private userService: UserService,
-    private fb: FormBuilder
+    private _postService: PostService
   ) {
-    this.createPostForm();
+    this.apiOrigin = environment.apiOrigin
   }
 
   ngOnInit() {
-    this.fetchUsers();
+   this.fetchPosts(this.currentPage);
   }
 
-  fetchUsers () {
-    this.userService
-      .getUsers()
-      .subscribe(users => {
-        this.users = users;
-        this.fetchPosts();
+  fetchPosts (page) {
+    this.loading = true;
+    this._postService
+      .getPosts(page)
+      .subscribe((response) => {
+        for (let post of response.data) {
+          this.posts.push(Object.assign(new PostViewModel(), post));
+        }
+        this.loading = false;
+        this.isLastPage = response.pagination.currentPage === response.pagination.totalPages
+        this.currentPage++;
+      }, (error) => {
+        this.loading = false;
       });
   }
 
-  fetchPosts () {
-    this.postService
-      .getPosts()
-      .subscribe((posts) => {
-        this.posts = [];
-        for (let post of posts) {
-          this.posts.push(Object.assign(new Post(), post));
-        }
-        this.loading = false;
-    });
-  }
-
-  user(id: any) {
-    for (let user of this.users) {
-      if (user.id === id)
-        return user;
-    }
-    return {};
-  }
-
-  searchedPostsCount () : number{
-    if(this.isSearchEmpty) {
-      return 1;
-    }
-    let counter = 0;
-    for (let post of this.posts) {
-      if(post.show && post.title.search(this.q) > -1) {
-        counter++;
-      }
-    }
-    return counter;
-  }
-
-  get isSearchEmpty (): boolean {
-    if(!this.q || this.q.trim() === '') {
-      return true;
-    }
-    return false;
-  }
-
-  createPostForm () {
-    this.postForm = this.fb.group({
-      postItems: this.fb.array([])
-    });
-  }
-
-  addPostItem () {
-    this.postItems.push(this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required]
-    }));
-  }
-
-  removePostItem(index) {
-    this.postItems.removeAt(index);
-  }
-
-  get postItems () { return this.postForm.get('postItems') as FormArray; }
-
-  submitPosts () {
-    this.postFormSubmitted = true;
-    this.postService.postAll(this.postForm.value.postItems).subscribe(data => this.clearFormArray(this.postItems));
-  }
-
-  clearFormArray = (formArray: FormArray) => {
-    while (formArray.length !== 0) {
-      formArray.removeAt(0)
-    }
+  loadMore() {
+    this.fetchPosts(this.currentPage);
   }
 }

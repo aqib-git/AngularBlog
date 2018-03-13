@@ -4,6 +4,7 @@ import { MediaService } from '../../services/media.service';
 import { environment } from "../../../environments/environment";
 import { PostService } from '../../services/post.service';
 import { AccountService } from '../../services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-form',
@@ -19,12 +20,14 @@ export class PostFormComponent implements OnInit {
   mediaSize: number = 5; // MB
   mediaExtensions: string[] = ['image/x-png', 'image/gif' , 'image/jpeg' , 'video/mp4' , 'video/ogg', 'video/webm'];
   mediaUrl: string;
+  errorMessage: string = '';
 
   constructor(
     private _fb: FormBuilder,
     private _mediaService: MediaService,
     private _postService: PostService,
-    private _accountService: AccountService
+    private _accountService: AccountService,
+    private _router: Router
   ) {
     this.createForm();
   }
@@ -44,8 +47,21 @@ export class PostFormComponent implements OnInit {
 
   savePost() {
     this.showValidationErrors = true;
+    console.log(this._accountService.user());
     this.postForm.get('userId').setValue(this._accountService.user().id);
-    console.log(this.postForm.value);
+    if(!this.postForm.valid) {
+      return;
+    }
+    this.posting = true;
+    this.errorMessage = '';
+    this._postService.createPost(this.postForm.value)
+      .subscribe((post) => {
+        this._router.navigate(['/posts']);
+        this.posting = false;
+      }, (error) => {
+        this.posting = false;
+        this.errorMessage = "Unable to create post, please try again."
+      });
   }
 
   mediaChange(event) {

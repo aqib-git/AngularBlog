@@ -1,11 +1,8 @@
-.post .post-content{
-    padding: 10px;
-    background-color: lightcyan;
-    margin-bottom: 20px;
+.post-list article {
+  margin: 20px 0;
 }
-
-.post .post-content a { 
-    color: black; 
-    font-weight: 400; 
-    text-decoration: none;
+.post-list img {
+  max-height: 250px;
+  object-fit: cover;
+  object-position: 50% 20%;
 }

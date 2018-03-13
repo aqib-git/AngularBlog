@@ -38,7 +38,7 @@ const appRoutes: Routes = [
         data: {requireAuth: false},
         canActivateChild: [AuthGuard],
         children: [
-          { path: 'posts', component: PostListComponent, data: {requireAuth: true} },
+          { path: 'posts', component: PostListComponent, data: {requireAuth: false} },
           { path: 'posts/create', component: CreatePostComponent, data: {requireAuth: true} }
         ]
       }
