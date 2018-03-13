@@ -18,7 +18,7 @@ export class PostFormComponent implements OnInit {
   showValidationErrors: boolean;
   validExtension: boolean;
   mediaSize: number = 5; // MB
-  mediaExtensions: string[] = ['image/x-png', 'image/gif' , 'image/jpeg' , 'video/mp4' , 'video/ogg', 'video/webm'];
+  mediaExtensions: string[] = ['image/png', 'image/x-png', 'image/gif' , 'image/jpeg' , 'video/mp4' , 'video/ogg', 'video/webm'];
   mediaUrl: string;
   errorMessage: string = '';
 
